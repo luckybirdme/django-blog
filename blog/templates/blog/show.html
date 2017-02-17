@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}
+Show
+{% endblock title %}
+
+{% load static %}
+{% block head %}
+  	<script src="{% static 'js/comment.js' %}"></script>
+{% endblock head %}
+
+{% block main %}
+
+	<div class="panel panel-default panel-feed">
+
+		<div class="panel-body">
+			<section class="articles">
+				{% if user and article.user == user %}
+					<a href="{% url 'blog:write' %}?id={{ article.id }}" class="btn btn-primary pull-right " >Edit</a>
+				{% endif %}
+				
+				{% include 'blog/article.html' with article=article %}
+				<p>
+					{{ article.content|safe }}
+				</p>
+			</section>
+
+			<form action="{% url 'blog:comment' %}" method="post" role="form" id="comment" style="border-top: 1px solid #e3e3e3;">
+			  {% csrf_token %}
+			  {% for field in form.visible_fields %}
+				<div class="form-group{% if field.errors %} has-error{% endif %}">
+					<label for="{{ field.label }}">{{ field.label }}</label>
+					{{ field }}
+					{% if field.help_text %}
+						<span class="help-block">{{ field.help_text|safe }}</span>
+					{% endif %}
+					{% for error in field.errors %}
+						<label class="control-label">{{ error }}</label>
+					{% endfor %}
+				</div>
+				{% endfor %}
+				{% for field in form.hidden_fields %}
+					{{ field }}
+				{% endfor %}
+			  <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+			</form>
+
+			<div style="margin:10px 0;" >
+				{% if article.get_comments.count > 0 %}
+					<div class="comment" >
+					{% for comment in article.get_comments %}
+						  <div class="comment-text" style="border-top:1px solid #e3e3e3">
+						    <h5>
+						    	
+								<span style="margin-right:10px;">
+									<span class="glyphicon glyphicon-user"></span>
+									<a href="{% url 'blog:user' comment.user %}">{{ comment.user }}</a>
+								</span>
+								<span style="margin-right:10px;">
+									<span class="glyphicon glyphicon-calendar"></span>
+									{{ comment.create_time }}
+								</span>
+						    </h5>
+						    <p>{{ comment.content }}</p>
+						  </div>
+					{% endfor %}
+					</div>
+				{% else %}
+					<div >Be the first one to comment</div>
+				{% endif %}
+			
+			</div>
+			
+		</div>
+	</div>
+
+{% endblock main %}

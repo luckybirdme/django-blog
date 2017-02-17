@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}
+login
+{% endblock title %}
+
+{% block main %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+
+		<div class="panel panel-default panel-feed">
+			<div class="panel-heading">
+			  	<h3 class="panel-title">Login</h3>
+			</div>
+			<div class="panel-body">
+				<form action="{% url 'registration:login' %}" method="post" role="form">
+			      {% csrf_token %}
+			      {% for field in form.visible_fields %}
+			        <div class="form-group{% if field.errors %} has-error{% endif %}">
+			          <label for="{{ field.label }}">{{ field.label }}</label>
+			          {{ field }}
+			          {% if field.help_text %}
+			            <span class="help-block">{{ field.help_text|safe }}</span>
+			          {% endif %}
+			          {% for error in field.errors %}
+			            <label class="control-label">{{ error }}</label>
+			          {% endfor %}
+			        </div>
+			      {% endfor %}
+			      <button type="submit" class="btn btn-primary btn-sm">Go to login</button>
+			    </form>
+			</div>
+		</div>
+    </div>
+</div>
+    
+{% endblock main %}

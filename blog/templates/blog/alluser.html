@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block main %}
+<div class="row">
+	<div class="col-md-10">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{ title }}</h3>
+			</div>
+			<div class="panel-body">
+				<section class="articles">
+					{% for user in users %}
+						<article style="margin: 0 0 10px 0;border-bottom:1px solid #e3e3e3;padding:10px 0;">
+							<div class="info">
+								<span style="margin-right:10px;width:100px;display:inline-block;">
+									<span class="glyphicon glyphicon-user"></span>
+									<a href="{% url 'blog:user' user.username %}">{{ user.username }}</a>
+								</span>
+								<span style="margin-right:10px;width:200px;display:inline-block;">
+									<span class="glyphicon glyphicon-calendar"></span>
+									{{ user.last_login }}
+								</span>
+								<span class="comments" style="width:100px;display:inline-block;">
+							    	<span class="glyphicon glyphicon-book"></span>
+							      		{{ user.get_articles.count }} Articles
+							    </span>
+								
+								<span class="comments" style="width:100px;display:inline-block;">
+							    	<span class="glyphicon glyphicon-comment"></span>
+							      		{{ user.get_comments.count }} Comments
+							    </span>
+							    
+									
+							</div>
+														  
+						</article>
+					{% endfor %}
+				</section>
+
+
+
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+
+
+{% endblock main %}

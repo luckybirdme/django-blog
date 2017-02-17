@@ -1,0 +1,31 @@
+<article style="margin: 0 0 10px 0">
+	<h3 style="margin-top:0px;margin-bottom:5px">
+		<a href="{% url 'blog:show' article.id %}">{{ article.title }}</a>
+	</h3>
+	<div class="info">
+		<span style="margin-right:10px;">
+			<span class="glyphicon glyphicon-calendar"></span>
+			{{ article.update_time }}
+		</span>
+		<span style="margin-right:10px;">
+			<span class="glyphicon glyphicon-user"></span>
+			<a href="{% url 'blog:user' article.user %}">{{ article.user }}</a>
+		</span>
+		<span class="comments">
+	    <span class="glyphicon glyphicon-comment"></span>
+	      	{{ article.get_comments.count }} Comments
+	    </span>
+			
+	</div>
+	{% if article.get_tags %}
+		<div class="info">
+			<span >
+				{% for tag in article.get_tags %}
+					<a href="{% url 'blog:tag' tag %}" class="label label-default"  >{{ tag }}</a>
+				{% endfor %}
+			</span>
+		</div>
+	{% endif %}
+	
+	  
+</article>
