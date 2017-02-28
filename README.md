@@ -1,6 +1,7 @@
 # django-blog
 
-Django，一个Python写的Web框架，以此搭建简单的Blog来学习
+Django，一个Python写的Web框架，以此搭建简单的Blog来学习，[Demo](http://django.luckybird.me/)
+
 
 **功能简介:**
 * 用户注册和登录，热度排序
